@@ -1,0 +1,41 @@
+.tax{
+   top: 100px;
+   position: absolute;
+   width:50px;
+   color:rgb(239, 236, 241);
+    }
+.tax>h1{
+    text-align: center;
+          color: rgba(247, 238, 238, 0.986);
+          font-size: 25px;
+          width: 1000px;
+}
+.tax table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 200%;
+    border: 3;
+    border-color: black;
+    
+
+  }
+  
+  .tax td, .tax th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    width: 100px;
+    
+  }
+  
+  .tax tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  .tax input[type=submit],select{
+    width: 100px;
+    padding: 5px 10px;
+    margin: 8px;
+    float:center;
+    height: 30px;
+    background-color: rgb(65, 62, 62);
+  }

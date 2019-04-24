@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="./node_modules/web3/dist/web3.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            var web3=require('web3') ;  
+            if (web3.currentProvider !== undefined )
+            {
+                web3 = new Web3(web3.currentProvider);
+            } 
+            else 
+            {
+                // set the provider you want from Web3.providers
+                web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+            }
+            var UserManagement = web3.eth.contract(
+				[
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getUser",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "int16"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "fName",
+				"type": "string"
+			},
+			{
+				"name": "lName",
+				"type": "string"
+			},
+			{
+				"name": "addr",
+				"type": "string"
+			},
+			{
+				"name": "age",
+				"type": "int16"
+			},
+			{
+				"name": "email",
+				"type": "string"
+			}
+		],
+		"name": "registerUser",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
+		);
+		var users = UserManagement.at("0x2cc0704f27ac5a36c384cbc46c15429ff349ce76");
+        </script>
+        <script>
+
+            $(document).ready(function(){
+                $("#button").click(async function() {
+                    var transaction = {
+                        from:$("#accounts").val(),
+                        gas: 480000
+                    }
+                    var txn = await users.registerUser(
+                        $("#fName").val(),
+                        $("#lName").val(),
+                        $("#addr").val(),
+                        parseInt( $("#age").val()),
+                        $("#email").val(),transaction);
+                    
+                    console.log(txn);
+                    let val=$("#accounts").val();
+                    LoadUpdatedAccounts();
+                    $("#accounts").val(val);
+                    //.call();
+                });
+                $("#readUser").click(function() {
+                    console.log(users.getUser());
+             
+				});
+                $("#accounts").change(function(){
+                    debugger;
+                    web3.eth.defaultAccount = $("#accounts").val();
+                    web3.personal.unlockAccount(web3.eth.defaultAccount);
+                })
+                debugger;
+                LoadUpdatedAccounts();
+            });
+            function LoadUpdatedAccounts(){
+                $("#accounts").children().remove();
+                web3.eth.accounts.forEach((account, index) => {
+                    var option = document.createElement('option');
+                    option.value = account;
+                    option.text = `Account - ${index+1} (${web3.fromWei(web3.eth.getBalance(account))})`
+                    document.getElementById("accounts").appendChild(option);
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <select id="accounts">
+
+            </select>
+        </div>
+        <div class="container">
+			<h1>First Smart Contract</h1>
+			<h2 id="instructor"></h2>
+            <label for="fName" class="col-lg-2 control-label">First Name</label>
+            <input id="fName" type="text">
+            <label for="lName" class="col-lg-2 control-label">Last Name</label>
+            <input id="lName" type="text">
+            <label for="addr" class="col-lg-2 control-label">Address</label>
+            <input id="addr" type="text">
+            <label for="age" class="col-lg-2 control-label">Age</label>
+            <input id="age" type="text">
+            <label for="email" class="col-lg-2 control-label">Email</label>
+            <input id="email" type="text">
+            <button id="button">Register User</button>
+        </div>
+        <div class="container">
+            <button id="readUser">Fetch User</button>
+        </div>
+        
+    </body>
+</html>

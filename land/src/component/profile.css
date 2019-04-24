@@ -1,0 +1,12 @@
+.card{
+   display: block;
+   border: 1px solid #999;
+   width: 1000px;
+   height: 500px;
+   padding: 10px;
+   margin: 12px;
+   color: #56f00f;
+}
+.card>div>h1{
+   align-items: center;
+}

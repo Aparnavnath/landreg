@@ -1,0 +1,37 @@
+
+  .lout ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+display: inline-block;
+ float: right;
+ line-height: -1000em;
+
+  }
+  
+  
+  .lout li {
+    display:inline-block;
+    border-right:1px solid #bbb;
+  }
+  
+  .lout li:last-child {
+    border-right: none;
+  }
+  
+  .lout li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  .lout li a:hover:not(.active) {
+    background-color: rgba(13, 230, 211, 0.425);
+  }
+.title{
+  display: inline-block;
+  line-height: 2em;
+}
